@@ -1,7 +1,5 @@
 # pokemonTeamBuilder
 
-*** 
-
 #### Collaborators: 
 * Stephen Baldock, Developer
 * Jen Chinzi, Developer
