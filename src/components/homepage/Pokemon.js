@@ -1,54 +1,99 @@
 import React from 'react';
-// import { connect } from 'react-redux';
-
-
+import { When } from 'react-if';
+import { connect } from 'react-redux';
+import { navigate } from '../../store/typeReducer.js';
+import { makeStyles } from '@material-ui/core/styles';
 
 // --------------> Material UI dependencies <---------------//
+import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
+// import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
-// @material-ui/button
-//@material-ui/icon-button?
-{/* <IconButton aria-label="delete">
-  <DeleteIcon />
-</IconButton>
-<IconButton aria-label="delete" disabled color="primary">
-  <DeleteIcon />
-</IconButton>
-<IconButton color="secondary" aria-label="add an alarm">
-  <AlarmIcon />
-</IconButton>
-<IconButton color="primary" aria-label="add to shopping cart">
-  <AddShoppingCartIcon />
-</IconButton> */}
 // -------------->          END            <---------------// 
 
 
-// import { getPokemon } from '../../store/PokemonReducer';
+// -------------->   STYLING START     <---------------//
+const useStyles = makeStyles((theme) => ({
+  icon: {
+    marginRight: theme.spacing(2),
+  },
+  heroContent: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 6),
+  },
+  heroButtons: {
+    marginTop: theme.spacing(4),
+  },
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
 
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+  },
+  cardContent: {
+    backgroundColor: "#C9E9CB",
+    flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  footer: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(6),
+  },
+}));
+// -------------->   STYLING END    <---------------//
 
+function Pokemon(props){
 
+  const classes = useStyles();
 
-
-function Pokemon(){
   return (
-    <Card>
-    <CardContent>
-      <Typography>
-        Pokemon
-      </Typography>
-    </CardContent>
-    <CardActions>
-    </CardActions>
-  </Card>
+    <>
+    <When condition={!props.activeType}>
+      <Container id="cardgrid" className={classes.cardGrid}>
+      <Grid container spacing={4}>
+        {props.pokemon.map((pokemon, i) => (
+          <Grid item key={i} xs={12} sm={6} md={4}>
+            <Card>
+              <CardContent className={classes.cardContent}>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {pokemon.pokemon.name}
+                </Typography>
+              </CardContent>
+              {/* <CardActions> */}
+                {/* <Button size="small" color="primary">
+                    View Details
+                </Button>
+                <Button size="small" color="primary">
+                    Add To Team
+                </Button> */}
+              {/* </CardActions> */}
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
+  </When>
+  </>
   )
 }
 
-// const mapDispatchToProps = {//Add to Cart Here?}
-// const mapStateToProps = state => ({
-  
-// })
+const mapStateToProps = state => ({
+  activeType: state.types.activeType,
+  pokemon: state.pokemon.pokemon,
+})
 
-export default Pokemon;
+const mapDispatchToProps = {navigate};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pokemon);

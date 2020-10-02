@@ -1,11 +1,15 @@
 /* eslint-disable no-case-declarations */
 
+// --------->     STATE     <------------//
+
 let initialState = {
   team: [
     {name: 'name'},
   ],
   totalPokemon: 0,
 }
+
+// --------->   STATE END   <------------//
 
 export default ( state = initialState, action ) => {
 
